@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TAM 7
+#define TAM 8
 
 typedef struct _no
 {
@@ -30,35 +30,44 @@ TabelaHash *criarTabelaHash() {
 }
 
 void inserirQ1 (TabelaHash *tabela, const int chave) {
-    No *no = (No *) calloc(1, sizeof(No));
-    no->chave = chave;
-    no->proximo = NULL;
+    int indice = hash_q1(chave);
+    int num = 0; 
 
-    int indice = hash_q1(no->chave);
 
-    if (tabela->dados[indice] == NULL) {
-        tabela->dados[indice] = no;
-        return;
+    while (num < TAM) {
+        int pos = hash_q1(indice + 1); 
+        if (tabela->dados[pos] == NULL) {
+            No *no = (No *) calloc(1, sizeof(No)); 
+            no->chave = chave; 
+            tabela->dados[pos] = no;
+            return; 
+        }
+        num++;
     }
+    printf("lista cheia\n"); 
+    
+}
 
-    No *aux = tabela->dados[indice];
+void remover (TabelaHash *tabela, const int chave) {
+    int indice = hash_q1(chave); 
 
-    while (aux != NULL) {
+    No *atual = tabela->dados[indice];
+    No *anterior = NULL;
 
-        if (aux->chave == chave) {
-            free(aux);
+    while (atual != NULL) {
+        if (atual->chave == chave) {
+            if (anterior == NULL) {
+                tabela->dados[indice] = atual->proximo;
+            } else {
+                anterior->proximo = atual->proximo;
+            }
+            free(atual); 
             return;
         }
-
-        if (aux->proximo == NULL) {
-            aux->proximo = no;
-            return;
-        }
-
-        aux = aux->proximo;
-
+        anterior = atual;
+        atual = atual->proximo;
     }
-
+    
 }
 
 void imprimir(const TabelaHash *tabela) {
@@ -90,23 +99,20 @@ void imprimir(const TabelaHash *tabela) {
 int main() {
 
     //q1 - > 17, 8, 26, 31, 29, 3, 14, 10 e 21
-    // 15, 11, 27, 8, 12, 14, 20
 
     TabelaHash *tabela = criarTabelaHash();
-    inserirQ1(tabela, 15);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 11);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 27);
-    imprimir(tabela); printf("\n");
+    inserirQ1(tabela, 17);
     inserirQ1(tabela, 8);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 12);
-    imprimir(tabela); printf("\n");
+    inserirQ1(tabela, 26);
+    inserirQ1(tabela, 31);
+    inserirQ1(tabela, 29);
+    inserirQ1(tabela, 3);
     inserirQ1(tabela, 14);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 20);
-    imprimir(tabela); printf("\n");
+    inserirQ1(tabela, 10);
+    inserirQ1(tabela, 21);
+    inserirQ1(tabela, 99);
+    //remover(tabela, 3); 
+    imprimir(tabela); 
 
     return 0;
 }

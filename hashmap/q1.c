@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TAM 7
+#define TAM 13
 
 typedef struct _no
 {
@@ -61,6 +61,28 @@ void inserirQ1 (TabelaHash *tabela, const int chave) {
 
 }
 
+void remover (TabelaHash *tabela, const int chave) {
+    int indice = hash_q1(chave); 
+
+    No *atual = tabela->dados[indice];
+    No *anterior = NULL;
+
+    while (atual != NULL) {
+        if (atual->chave == chave) {
+            if (anterior == NULL) {
+                tabela->dados[indice] = atual->proximo;
+            } else {
+                anterior->proximo = atual->proximo;
+            }
+            free(atual); 
+            return;
+        }
+        anterior = atual;
+        atual = atual->proximo;
+    }
+    
+}
+
 void imprimir(const TabelaHash *tabela) {
     for (int i = 0; i < TAM; i++)
     {
@@ -90,23 +112,19 @@ void imprimir(const TabelaHash *tabela) {
 int main() {
 
     //q1 - > 17, 8, 26, 31, 29, 3, 14, 10 e 21
-    // 15, 11, 27, 8, 12, 14, 20
 
     TabelaHash *tabela = criarTabelaHash();
-    inserirQ1(tabela, 15);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 11);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 27);
-    imprimir(tabela); printf("\n");
+    inserirQ1(tabela, 17);
     inserirQ1(tabela, 8);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 12);
-    imprimir(tabela); printf("\n");
+    inserirQ1(tabela, 26);
+    inserirQ1(tabela, 31);
+    inserirQ1(tabela, 29);
+    inserirQ1(tabela, 3);
     inserirQ1(tabela, 14);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 20);
-    imprimir(tabela); printf("\n");
+    inserirQ1(tabela, 10);
+    inserirQ1(tabela, 21);
+    remover(tabela, 3); 
+    imprimir(tabela); 
 
     return 0;
 }

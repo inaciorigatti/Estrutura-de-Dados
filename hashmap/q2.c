@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TAM 7
+#define TAM 11
 
 typedef struct _no
 {
@@ -9,15 +9,15 @@ typedef struct _no
     struct _no *proximo;
 } No;
 
-typedef struct _tabelaHash 
+typedef struct _tabelaHash
 {
     No *dados[TAM];
 } TabelaHash;
 
-int hash_q1(const int k) {
-    return k % TAM;
-}
 
+int hash_q2(const int k) {
+    return (2*k + 5) % 11;
+}
 
 TabelaHash *criarTabelaHash() {
     TabelaHash *tabela = (TabelaHash *)calloc(1, sizeof(TabelaHash));
@@ -29,12 +29,13 @@ TabelaHash *criarTabelaHash() {
     return tabela;
 }
 
-void inserirQ1 (TabelaHash *tabela, const int chave) {
+void inserirQ2 (TabelaHash *tabela, const int chave) {
     No *no = (No *) calloc(1, sizeof(No));
+
     no->chave = chave;
     no->proximo = NULL;
 
-    int indice = hash_q1(no->chave);
+    int indice = hash_q2(no->chave);
 
     if (tabela->dados[indice] == NULL) {
         tabela->dados[indice] = no;
@@ -89,24 +90,19 @@ void imprimir(const TabelaHash *tabela) {
 
 int main() {
 
-    //q1 - > 17, 8, 26, 31, 29, 3, 14, 10 e 21
-    // 15, 11, 27, 8, 12, 14, 20
-
-    TabelaHash *tabela = criarTabelaHash();
-    inserirQ1(tabela, 15);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 11);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 27);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 8);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 12);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 14);
-    imprimir(tabela); printf("\n");
-    inserirQ1(tabela, 20);
-    imprimir(tabela); printf("\n");
+    TabelaHash *tabela2 = criarTabelaHash();
+    inserirQ2(tabela2, 7);
+    inserirQ2(tabela2, 18);
+    inserirQ2(tabela2, 30);
+    inserirQ2(tabela2, 25);
+    inserirQ2(tabela2, 50);
+    inserirQ2(tabela2, 41);
+    inserirQ2(tabela2, 62);
+    inserirQ2(tabela2, 14);
+    inserirQ2(tabela2, 9);
+    inserirQ2(tabela2, 37);
+    inserirQ2(tabela2, 3);
+    imprimir(tabela2);
 
     return 0;
 }

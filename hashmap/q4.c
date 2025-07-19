@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TAM 7
+#define TAM 11
 
 typedef struct _no
 {
@@ -76,25 +76,25 @@ void imprimir(const TabelaHash *tabela) {
 
 int main() {
 
-    //  15, 11, 27, 8, 12, 14, 20 
     TabelaHash *tabela4 = criarTabelaHash();
-    inserirQ4(tabela4, 15);
-    imprimir(tabela4); printf("\n");
-    inserirQ4(tabela4, 11);
-    imprimir(tabela4); printf("\n");
-    inserirQ4(tabela4, 27);
-    imprimir(tabela4); printf("\n");
     inserirQ4(tabela4, 8);
-    imprimir(tabela4); printf("\n");
+    inserirQ4(tabela4, 21);
+    inserirQ4(tabela4, 19);
+    inserirQ4(tabela4, 33);
+    inserirQ4(tabela4, 27);
+    inserirQ4(tabela4, 5);
+    inserirQ4(tabela4, 0);
     inserirQ4(tabela4, 12);
-    imprimir(tabela4); printf("\n");
-    inserirQ4(tabela4, 14);
-    imprimir(tabela4); printf("\n");
-    inserirQ4(tabela4, 20);
-    imprimir(tabela4); printf("\n");
+    inserirQ4(tabela4, 31);
 
+    imprimir(tabela4); 
+    printf("\n");
 
-    
+    remover(tabela4, 27);
+    remover(tabela4, 5);
+
+    imprimir(tabela4);
+    printf("\n");
     
     
     return 0;

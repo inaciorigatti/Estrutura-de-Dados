@@ -1,0 +1,11 @@
+complexidade big O notation 
+merge sort
+O (n log n)
+
+VIDEO: 
+
+https://youtu.be/acHtL5HOuss
+
+https://youtu.be/acHtL5HOuss
+
+https://youtu.be/acHtL5HOuss

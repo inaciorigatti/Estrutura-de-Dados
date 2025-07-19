@@ -1,0 +1,100 @@
+int altura (Node *no) {
+
+    if (no == NULL) {
+        return 0;
+    }
+
+    return no->altura; 
+}
+
+int fatorBalanceamento (Node *no) {
+
+    if (no == NULL) {
+        return 0;
+    }
+
+    return altura(no->esquerda) - altura(no->direita);
+}
+
+int maxAvl (int a, int b) {
+    return (a > b) ? a : b ;
+}
+
+Node *rotacaoDireita (Node *no) {
+    Node *novaRaiz = no->esquerda;
+    Node *t2 = novaRaiz->direita; 
+
+    novaRaiz->direita = no;
+    no->esquerda = t2; 
+
+    int alturaEsquerdaRaiz = altura(novaRaiz->esquerda); 
+    int alturaDireitaraiz = altura(novaRaiz->direita);
+
+    int alturaEsquerda = altura(no->esquerda); 
+    int alturaDireita = altura(no->direita);
+
+    no->altura = 1 + maxAvl(alturaEsquerda, alturaDireita);
+    novaRaiz = 1 + maxAvl(alturaEsquerdaRaiz, alturaDireitaraiz);
+
+    return novaRaiz; 
+
+}
+
+Node *rotacaoEsquerda (Node *no) {
+    Node *novaRaiz = no->direita;
+    Node *t2 = novaRaiz->esquerda;
+
+    novaRaiz->esquerda = no;
+    no->direita = t2; 
+
+    int alturaEsquerdaRaiz = altura(novaRaiz->esquerda); 
+    int alturaDireitaraiz = altura(novaRaiz->direita);
+
+    int alturaEsquerda = altura(no->esquerda); 
+    int alturaDireita = altura(no->direita);
+
+    no->altura = 1 + maxAvl(alturaEsquerda, alturaDireita);
+    novaRaiz = 1 + maxAvl(alturaEsquerdaRaiz, alturaDireitaraiz);
+
+    return novaRaiz; 
+    
+}
+
+
+Node *adicionar (Node *raiz, int valor) {
+
+    Node *novo = (Node *) calloc(1, sizeof(Node));
+    novo->valor = valor;
+    novo->direita = NULL;
+    novo->esquerda = NULL;
+    novo->altura = 1; 
+
+     if (raiz == NULL) {
+        return raiz;
+    }
+
+    if (valor < raiz->valor) {
+        raiz->esquerda = adicionar(raiz->esquerda, valor);
+    } else if (valor > raiz->valor) {
+        raiz->direita = adicionar(raiz->direita, valor);
+    } else {
+        return raiz; 
+    }
+
+
+    int alturaEsquerda = altura(raiz->esquerda);
+    int alturaDireita = altura(raiz->direita);
+
+    raiz->altura = 1 + maxAvl(alturaEsquerda, alturaDireita);
+    int fb = fatorBalanceamento(raiz); 
+
+    if(fb > 1 && valor < raiz->esquerda->valor) {
+        return rotacaoDireita(raiz); 
+    }
+
+    if(fb < -1 && valor > raiz->direita->valor) {
+        return rotacaoEsquerda(raiz); 
+    } 
+
+
+}
